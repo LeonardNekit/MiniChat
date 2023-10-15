@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Чат</title>
+</head>
+<body>
+    <div id="chatbox"></div>
+    <input type="text" id="chatinput">
+    <button onclick="sendMessage()">Отправить</button>
+
+    <script>
+function loadChat() {
+    // Загрузка сообщений из файла
+    fetch('chatlog.txt')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('chatbox').innerHTML = data;
+        });
+}
+
+function sendMessage() {
+    const message = document.getElementById('chatinput').value;
+    const timestamp = new Date().toLocaleString();
+
+    const chatMessage = `${timestamp}: ${message}<br/><br/>`;
+
+    // Добавление сообщения в чат
+    document.getElementById('chatbox').innerHTML += chatMessage;
+
+    // Сохранение сообщения в файл
+    fetch('savechat.php', {
+        method: 'POST',
+        body: new URLSearchParams({
+            chatMessage: chatMessage
+        })
+    });
+
+    // Очистка поля ввода
+    document.getElementById('chatinput').value = "";
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Загрузка чата при открытии страницы
+    loadChat();
+});
+</script>
+
+</body>
+</html>
