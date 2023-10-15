@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+<html>
+<html lang="ru">
+<meta http-equiv="Content-Type" content="text/html; charset="utf-8"> 
+<head>
+    <title>Мини-чат</title>
+    <style>
+        #chat {
+            width: 300px;
+            height: 200px;
+            overflow: auto;
+            border: 1px solid black;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="chat"></div>
+    <input type="text" id="message">
+    <button onclick="sendMessage()">Отправить</button>
+
+    <script>
+function sendMessage() {
+    var messageInput = document.getElementById("message");
+    var message = messageInput.value;
+    
+    if (message) {
+        var chat = document.getElementById("chat");
+        chat.innerHTML += "<p>" + message + "</p>";
+        
+        messageInput.value = "";
+        chat.scrollTop = chat.scrollHeight;
+    }
+}
+</script>
+</body>
+</html>
